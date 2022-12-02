@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    
+    <title>Microsoft Teams| Group Chat Service</title>
+    <link rel="stylesheet" href="css/landing.css" />
+    <link rel="shortcut icon" href="images/MSlogo.svg" /> 
+  </head> 
+  <body class="animations">
+    <div class="bodyWrap">
+      <header class="pageHeader showTop ">
+        <div class="container">
+          <div class="pageHeader-in">
+            <div class="label">
+              <h1 class="sh-0">
+                <a href="/"
+                  ><img src="images/MSlogo.svg" alt="default" width="100" height="100"
+                /></a>
+              </h1>
+            </div>
+          </div>
+        </div>
+      </header>
+      <main class="pageContent">
+        <section class="one section illustration-section-01">
+          <div class="container">
+            <div class="one-in sec-in">
+              <div class="divWrap turn-cell">
+                <div class="divObj">
+                  <div
+                    class="one-con divObj-content middle-con-turn"
+                  >
+                    <h1
+                      class="st-0 sb-17 showBottom"
+                      data-reveal-delay="150"
+                    >
+                      You no longer have access.
+                    </h1>
+                    <p
+                      id="getUserError"
+                      class="st-0 sb-33 showBottom"
+                      data-reveal-delay="300"
+                    ></p>
+                    <p
+                      class="st-0 sb-33 showBottom"
+                      data-reveal-delay="300"
+                    >
+                      Please allow camera and microphone access to use this app.
+                    </p>
+                    <script>
+                      let qs = new URLSearchParams(window.location.search);
+                      let roomId = qs.get("roomId");
+                      let getUserError = qs.get("getUserError");
+                      console.log("Allow Camera && Audio", {
+                        roomId: roomId,
+                        getUserError: getUserError,
+                      });
+                      // printing getUserMedia error
+                      document.getElementById(
+                        "getUserError"
+                      ).innerHTML = getUserError;
+                    </script>
+                    <div class="showBottom" data-reveal-delay="450">
+                      <button
+                        class="button button-first button-large app-animation"
+                        style="
+                          border: 0;
+                          background: linear-gradient(
+                            100deg,
+                          #464EB8 0,
+                          #7B83EB 75%,
+                          #505AC9 100%
+                          );
+                        "
+                        onclick="roomId ? window.location.href = '/join/' + roomId : window.location.href = '/newcall';"
+                      >
+                        Try again
+                      </button>
+                    </div>
+                  </div>
+                  <style>
+                    @media (min-width: 641px) {
+                      .one .divWrap .divObj {
+                        min-height: 492px;
+                      }
+                    }
+                  </style>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+
+    </div>
+    <script src="js/landing.js"></script>
+  </body>
+</html>

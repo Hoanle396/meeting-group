@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Microsoft Teams | Group Chat Service</title>
+
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="/images/favicon.png"
+    />
+    <!-- Teams css -->
+    <link rel="stylesheet" href="/css/client.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+      integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <!-- whiteboard css -->
+    <link rel="stylesheet" href="/css/whiteboard.css" />
+    <!-- https://animate.style 4 swal fadeIn-Out -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
+  </head>
+
+  <body onload="initPeer()">
+    <!-- just 4SEO Optimization -->
+    <div id="webRTCSeo"><h1>WebRTC</h1></div>
+
+    <!-- show this before to join -->
+    <div id="loadObj">
+      <h1 class="pulsate">Connecting...</h1>
+      <pre>
+Please allow camera & microphone
+access to use this app.
+      </pre>
+    </div>
+
+    <!-- Start left buttons 
+    https://fontawesome.com/icons?d=gallery
+    -->
+    <div id="leftButtons">
+      <button id="shareTeamBtn" class="fas fa-users"></button>
+      <button id="audioToggleBtn" class="fas fa-microphone"></button>
+      <button id="videoToggleBtn" class="fas fa-video"></button>
+      <button id="shareScreenBtn" class="fas fa-desktop"></button>
+      <button id="fullScreenBtn" class="fas fa-expand-alt"></button>
+      <button id="chatRoomBtn" class="fas fa-comment"></button>
+      <button id="myHandBtn" class="fas fa-hand-paper"></button>
+      <button id="whiteboardBtn" class="fas fa-chalkboard-teacher"></button>
+      <button id="fileShareBtn" class="fas fa-folder-open"></button>
+      <button id="leaveRoomBtn" class="fas fa-phone-slash"></button>
+    </div>
+    <!-- End left buttons -->
+
+    <!-- Start chat service
+    https://codepen.io/sajadhsm/pen/odaBdd
+    https://getemoji.com
+    -->
+    <section id="messengerDrag" class="messenger-drag">
+      <section id="messenger" class="messenger">
+        <header id="messengerHeader" class="messenger-header">
+          <div class="messenger-header-title">
+            <i class="fas fa-comment-alt"></i> Chat
+          </div>
+          <div class="messenger-header-options">
+            <button id="messengerCPBtn" class="fas fa-users"></button>
+            <button id="messengerClean" class="fas fa-trash"></button>
+            <button id="messengerSaveBtn" class="fas fa-save"></button>
+            <button id="messengerClose" class="fas fa-times"></button>
+          </div>
+        </header>
+
+        <!-- public message -->
+        <main id="messengerChat" class="messenger-chat"></main>
+
+        <div class="messenger-inputarea">
+          <input
+            id="messengerInput"
+            class="messenger-input"
+            type="text"
+            placeholder="Enter your message"
+          />
+          <button id="messengerEmojiBtn" class="fas fa-smile"></button>
+          <button id="messengerSendBtn" class="fas fa-paper-plane"></button>
+        </div>
+      </section>
+      <!-- public message end-->
+      <!-- Start private msg -->
+      <section id="messengerCP">
+        <section id="messengerCPSec" class="messenger">
+          <header id="messengerCPHeader" class="messenger-private-header">
+            <div class="messenger-header-title">
+              <i class="fas fa-comment-alt"></i> Send Private message
+            </div>
+            <div class="messenger-header-options">
+              <button id="messengerCPCloseBtn" class="fas fa-times"></button>
+            </div>
+          </header>
+          <main id="messengerCPChat" class="messenger-chat">
+            <div id="messengerCPList"></div>
+          </main>
+        </section>
+      </section>
+      <!-- End private msg -->
+    </section>
+    <!-- End chat room -->
+
+    <!-- Start emoji picker 
+    https://github.com/nolanlawson/emoji-picker-element ] 
+    -->
+    <section id="messengerEmojiPicker">
+      <header id="messengerEmojiHeader">
+        <button id="messengerCloseEmojiBtn" class="fas fa-times"></button>
+      </header>
+      <emoji-picker class="light"></emoji-picker>
+    </section>
+    <!-- End emoji picker -->
+
+    <!-- Whiteboard starting-->
+    <div class="whiteboard-cont">
+      <div class="colors-container">
+        <button id="whiteboardCloseBtn" class="fas fa-times"></button>
+        <button id="whiteboardFsBtn" class="fas fa-expand-alt"></button>
+        <div>
+          <input
+            type="color"
+            id="whiteboardColorPicker"
+            onchange="setColor(value)"
+          />
+        </div>
+        <br />
+
+        <div class="white" onclick="setColor('#ffffff')"></div>
+        <div class="red" onclick="setColor('#e74c3c')"></div>
+        <div class="yellow" onclick="setColor('#f1c40f')"></div>
+        <div class="green" onclick="setColor('#badc58')"></div>
+        <div class="blue" onclick="setColor('#3498db')"></div>
+        <div class="orange" onclick="setColor('#e67e22')"></div>
+        <div class="purple" onclick="setColor('#9b59b6')"></div>
+        <div class="pink" onclick="setColor('#fd79a8')"></div>
+        <div class="brown" onclick="setColor('#834c32')"></div>
+        <div class="grey" onclick="setColor('#afadad')"></div>
+
+        <button id="whiteboardEraseBtn" class="fas fa-eraser"></button>
+        <button id="whiteboardSaveBtn" class="fas fa-save"></button>
+        <button id="whiteboardCleanBtn" class="fas fa-trash"></button>
+      </div>
+      <canvas id="whiteboard"></canvas>
+    </div>
+    <!-- Whiteboard End -->
+
+    <!-- Start File Send -->
+    <div id="shareFileDiv">
+      <div id="shareFileInfo"></div>
+      <div id="shareFilePercent"></div>
+      <progress id="progressReport" max="0" value="0"></progress>
+      <button id="sendAbortBtn" class="fas fa-stop-circle">&nbsp;Abort</button>
+    </div>
+    <!-- End File Send -->
+
+    <!-- Js scripts -->
+    <!-- <script
+      src="https://kit.fontawesome.com/d2f1016e6f.js"
+      crossorigin="anonymous"
+    ></script> -->
+    <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
+    <script src="https://cdn.rawgit.com/muaz-khan/DetectRTC/master/DetectRTC.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.16"></script>
+    <script
+      type="module"
+      src="https://unpkg.com/emoji-picker-element@1"
+    ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+    <script src="https://unpkg.com/@popperjs/core@2"></script>
+    <script src="https://unpkg.com/tippy.js@6"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/js/client.js"></script>
+    <!-- end JS scripts -->
+  </body>
+</html>
