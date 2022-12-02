@@ -67,9 +67,9 @@ app.get(["/newcall"], (req, res) => {
 });
 
 // chat room
-app.get(["/chat"], (req, res) => {
-  res.sendFile(path.join(__dirname, "www/chat.html"));
-});
+// app.get(["/chat"], (req, res) => {
+//   res.sendFile(path.join(__dirname, "www/chat.html"));
+// });
 
 // if not allow video/audio
 app.get(["/permission"], (req, res) => {
@@ -77,9 +77,9 @@ app.get(["/permission"], (req, res) => {
 });
 
 // privacy policy
-app.get(["/privacy"], (req, res) => {
-  res.sendFile(path.join(__dirname, "www/privacy.html"));
-});
+// app.get(["/privacy"], (req, res) => {
+//   res.sendFile(path.join(__dirname, "www/privacy.html"));
+// });
 
 // no team name specified to join
 app.get("/join/", (req, res) => {

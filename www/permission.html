@@ -1,39 +1,46 @@
 <!DOCTYPE html>
 <html lang="en" class="no-js">
   <head>
-    
-    <title>Microsoft Teams| Group Chat Service</title>
+    <title>VKU Metting</title>
     <link rel="stylesheet" href="css/landing.css" />
-    <link rel="shortcut icon" href="images/MSlogo.svg" /> 
-  </head> 
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+  </head>
   <body class="animations">
     <div class="bodyWrap">
-      <header class="pageHeader showTop ">
+      <nav class="navbar sticky-top navbar-light">
         <div class="container">
-          <div class="pageHeader-in">
-            <div class="label">
-              <h1 class="sh-0">
-                <a href="/"
-                  ><img src="images/MSlogo.svg" alt="default" width="100" height="100"
-                /></a>
-              </h1>
+          <a class="navbar-brand" href="#">
+            <div class="d-flex align-items-center">
+              <img
+                src="images/logo.png"
+                alt="default"
+                class="me-2"
+                width="40"
+                height="40"
+              />
+              <span style="font-weight: 700; font-size: 30p; color: #464eb8">
+                <span style="color: red">V</span
+                ><span style="color: #ffcb12">K</span
+                ><span style="color: #223b73">U</span> Meetting</span
+              >
             </div>
-          </div>
+          </a>
         </div>
-      </header>
+      </nav>
       <main class="pageContent">
         <section class="one section illustration-section-01">
           <div class="container">
             <div class="one-in sec-in">
               <div class="divWrap turn-cell">
                 <div class="divObj">
-                  <div
-                    class="one-con divObj-content middle-con-turn"
-                  >
-                    <h1
-                      class="st-0 sb-17 showBottom"
-                      data-reveal-delay="150"
-                    >
+                  <div class="one-con divObj-content middle-con-turn">
+                    <h1 class="st-0 sb-17 showBottom" data-reveal-delay="150">
                       You no longer have access.
                     </h1>
                     <p
@@ -41,10 +48,7 @@
                       class="st-0 sb-33 showBottom"
                       data-reveal-delay="300"
                     ></p>
-                    <p
-                      class="st-0 sb-33 showBottom"
-                      data-reveal-delay="300"
-                    >
+                    <p class="st-0 sb-33 showBottom" data-reveal-delay="300">
                       Please allow camera and microphone access to use this app.
                     </p>
                     <script>
@@ -56,9 +60,8 @@
                         getUserError: getUserError,
                       });
                       // printing getUserMedia error
-                      document.getElementById(
-                        "getUserError"
-                      ).innerHTML = getUserError;
+                      document.getElementById("getUserError").innerHTML =
+                        getUserError;
                     </script>
                     <div class="showBottom" data-reveal-delay="450">
                       <button
@@ -67,9 +70,9 @@
                           border: 0;
                           background: linear-gradient(
                             100deg,
-                          #464EB8 0,
-                          #7B83EB 75%,
-                          #505AC9 100%
+                            #464eb8 0,
+                            #7b83eb 75%,
+                            #505ac9 100%
                           );
                         "
                         onclick="roomId ? window.location.href = '/join/' + roomId : window.location.href = '/newcall';"
@@ -91,7 +94,11 @@
           </div>
         </section>
       </main>
-
+      <footer class="page-footer">
+        <div class="container">
+          <div class="page-footer-inner" style="padding: 1.9rem 0"></div>
+        </div>
+      </footer>
     </div>
     <script src="js/landing.js"></script>
   </body>
