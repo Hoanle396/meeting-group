@@ -15,17 +15,10 @@ const io = new Server().listen(server);
 
 let API_KEY_SECRET = process.env.API_KEY_SECRET || "teams_default_secret";
 let PORT = process.env.PORT || 3000;
-let localHost = "http://192.168.1.8:" + PORT;
+let localHost = "http://127.0.0.1:" + PORT;
 let channels = {};
 let sockets = {};
 let peers = {};
-
-let ngrokEnabled = process.env.NGROK_ENABLED;
-let ngrokAuthToken = process.env.NGROK_AUTH_TOKEN;
-let turnEnabled = process.env.TURN_ENABLED;
-let turnUrls = process.env.TURN_URLS;
-let turnUsername = process.env.TURN_USERNAME;
-let turnCredential = process.env.TURN_PASSWORD;
 
 // Using files from the www folder
 app.use(express.static(path.join(__dirname, "www")));
@@ -147,42 +140,6 @@ function makeId(length) {
 
 let iceServers = [{ urls: "stun:stun.l.google.com:19302" }];
 
-if (turnEnabled == "true") {
-  iceServers.push({
-    urls: turnUrls,
-    username: turnUsername,
-    credential: turnCredential,
-  });
-}
-
-/**
- * Expose server to external with https tunnel using ngrok
- * https://ngrok.com
- */
-// async function ngrokStart() {
-//   try {
-//     await ngrok.authtoken(ngrokAuthToken);
-//     await ngrok.connect(PORT);
-//     let api = ngrok.getApi();
-//     let data = await api.listTunnels();
-//     let pu0 = data.tunnels[0].public_url;
-//     let pu1 = data.tunnels[1].public_url;
-//     let tunnelHttps = pu0.startsWith("https") ? pu0 : pu1;
-//     // server settings
-//     logme("settings", {
-//       http: localHost,
-//       https: tunnelHttps,
-//       api_key_secret: API_KEY_SECRET,
-//       iceServers: iceServers,
-//       ngrok: {
-//         ngrok_enabled: ngrokEnabled,
-//         ngrok_token: ngrokAuthToken,
-//       },
-//     });
-//   } catch (err) {
-//     console.error("[Error] ngrokStart", err);
-//   }
-// }
 
 /**
  * Start Local Server with ngrok https tunnel (optional)
@@ -203,17 +160,13 @@ server.listen(PORT, null, () => {
     "font-family:monospace"
   );
 
-  // https tunnel
-  if (ngrokEnabled == "true") {
-    ngrokStart();
-  } else {
-    // server settings
-    logme("settings", {
-      http: localHost,
-      api_key_secret: API_KEY_SECRET,
-      iceServers: iceServers,
-    });
-  }
+  // server settings
+  logme("settings", {
+    http: localHost,
+    api_key_secret: API_KEY_SECRET,
+    iceServers: iceServers,
+  });
+
 });
 
 io.sockets.on("connect", (socket) => {
@@ -368,12 +321,12 @@ io.sockets.on("connect", (socket) => {
 
     logme(
       "[" +
-        socket.id +
-        "] emit onMessage to [room_id: " +
-        room_id +
-        " private_msg: " +
-        privateMsg +
-        "]",
+      socket.id +
+      "] emit onMessage to [room_id: " +
+      room_id +
+      " private_msg: " +
+      privateMsg +
+      "]",
       {
         name: name,
         msg: msg,
@@ -515,12 +468,12 @@ io.sockets.on("connect", (socket) => {
 
     logme(
       "[" +
-        socket.id +
-        "] kick out peer [" +
-        peer_id +
-        "] from room_id [" +
-        room_id +
-        "]"
+      socket.id +
+      "] kick out peer [" +
+      peer_id +
+      "] from room_id [" +
+      room_id +
+      "]"
     );
 
     if (peer_id in sockets) {
@@ -541,12 +494,12 @@ io.sockets.on("connect", (socket) => {
 
     logme(
       "[" +
-        socket.id +
-        "] Peer [" +
-        peer_name +
-        "] send file to room_id [" +
-        room_id +
-        "]",
+      socket.id +
+      "] Peer [" +
+      peer_name +
+      "] send file to room_id [" +
+      room_id +
+      "]",
       {
         fileName: file.fileName,
         fileSize: bytesToSize(file.fileSize),
